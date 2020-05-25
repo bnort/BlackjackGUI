@@ -6,6 +6,8 @@
 
 package my.bjgui;
 
+import java.awt.*;
+import javax.swing.*;
 /**
  *
  * @author bnort
@@ -26,13 +28,23 @@ public class BJGUITEST extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        superPanel = new javax.swing.JPanel();
         jPanelMainMenu = new javax.swing.JPanel();
         jButtonPlay = new javax.swing.JButton();
         jButtonUser = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
+        jPanelUser = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jButtonMenuReturnfromUser = new javax.swing.JButton();
+        jPanelPlay = new javax.swing.JPanel();
+        jButtonMenuReturnfromPlay = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(208, 208, 208));
+
+        superPanel.setLayout(new java.awt.CardLayout());
 
         jButtonPlay.setBackground(new java.awt.Color(11, 211, 211));
         jButtonPlay.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -69,18 +81,18 @@ public class BJGUITEST extends javax.swing.JFrame {
         jPanelMainMenu.setLayout(jPanelMainMenuLayout);
         jPanelMainMenuLayout.setHorizontalGroup(
             jPanelMainMenuLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelMainMenuLayout.createSequentialGroup()
-                .addContainerGap(78, Short.MAX_VALUE)
+            .add(jPanelMainMenuLayout.createSequentialGroup()
+                .add(85, 85, 85)
                 .add(jPanelMainMenuLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jButtonExit, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jButtonUser, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jButtonPlay, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(68, 68, 68))
+                .addContainerGap(589, Short.MAX_VALUE))
         );
         jPanelMainMenuLayout.setVerticalGroup(
             jPanelMainMenuLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanelMainMenuLayout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
+                .addContainerGap(234, Short.MAX_VALUE)
                 .add(jButtonPlay, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(18, 18, 18)
                 .add(jButtonUser, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -89,21 +101,91 @@ public class BJGUITEST extends javax.swing.JFrame {
                 .add(93, 93, 93))
         );
 
+        superPanel.add(jPanelMainMenu, "mainMenuCard");
+
+        jLabel3.setText("Please enter your name:");
+
+        jButtonMenuReturnfromUser.setText("Return to Main Menu");
+        jButtonMenuReturnfromUser.setToolTipText("");
+        jButtonMenuReturnfromUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMenuReturnfromUserActionPerformed(evt);
+            }
+        });
+
+        org.jdesktop.layout.GroupLayout jPanelUserLayout = new org.jdesktop.layout.GroupLayout(jPanelUser);
+        jPanelUser.setLayout(jPanelUserLayout);
+        jPanelUserLayout.setHorizontalGroup(
+            jPanelUserLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanelUserLayout.createSequentialGroup()
+                .add(277, 277, 277)
+                .add(jPanelUserLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jLabel3)
+                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 141, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(406, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelUserLayout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jButtonMenuReturnfromUser)
+                .addContainerGap())
+        );
+        jPanelUserLayout.setVerticalGroup(
+            jPanelUserLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanelUserLayout.createSequentialGroup()
+                .add(208, 208, 208)
+                .add(jLabel3)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 321, Short.MAX_VALUE)
+                .add(jButtonMenuReturnfromUser)
+                .addContainerGap())
+        );
+
+        superPanel.add(jPanelUser, "userCard");
+
+        jButtonMenuReturnfromPlay.setText("Return to Main Menu");
+        jButtonMenuReturnfromPlay.setToolTipText("");
+        jButtonMenuReturnfromPlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMenuReturnfromPlayActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("This is the play card");
+
+        org.jdesktop.layout.GroupLayout jPanelPlayLayout = new org.jdesktop.layout.GroupLayout(jPanelPlay);
+        jPanelPlay.setLayout(jPanelPlayLayout);
+        jPanelPlayLayout.setHorizontalGroup(
+            jPanelPlayLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanelPlayLayout.createSequentialGroup()
+                .add(281, 281, 281)
+                .add(jLabel2)
+                .addContainerGap(448, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelPlayLayout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jButtonMenuReturnfromPlay)
+                .addContainerGap())
+        );
+        jPanelPlayLayout.setVerticalGroup(
+            jPanelPlayLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelPlayLayout.createSequentialGroup()
+                .addContainerGap(390, Short.MAX_VALUE)
+                .add(jLabel2)
+                .add(165, 165, 165)
+                .add(jButtonMenuReturnfromPlay)
+                .addContainerGap())
+        );
+
+        superPanel.add(jPanelPlay, "playCard");
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(248, 248, 248)
-                .add(jPanelMainMenu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(245, Short.MAX_VALUE))
+            .add(superPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(71, 71, 71)
-                .add(jPanelMainMenu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
+            .add(superPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -113,13 +195,25 @@ public class BJGUITEST extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButtonExitActionPerformed
 
+    private void jButtonUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUserActionPerformed
+        CardLayout card = (CardLayout)superPanel.getLayout();
+        card.show(superPanel, "userCard");
+    }//GEN-LAST:event_jButtonUserActionPerformed
+
     private void jButtonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlayActionPerformed
-        jPanelMainMenu.setVisible(false);
+        CardLayout card = (CardLayout)superPanel.getLayout();
+        card.show(superPanel, "playCard");
     }//GEN-LAST:event_jButtonPlayActionPerformed
 
-    private void jButtonUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonUserActionPerformed
+    private void jButtonMenuReturnfromPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMenuReturnfromPlayActionPerformed
+        CardLayout card = (CardLayout)superPanel.getLayout();
+        card.show(superPanel, "mainMenuCard");
+    }//GEN-LAST:event_jButtonMenuReturnfromPlayActionPerformed
+
+    private void jButtonMenuReturnfromUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMenuReturnfromUserActionPerformed
+        CardLayout card = (CardLayout)superPanel.getLayout();
+        card.show(superPanel, "mainMenuCard");
+    }//GEN-LAST:event_jButtonMenuReturnfromUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,9 +252,17 @@ public class BJGUITEST extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonExit;
+    private javax.swing.JButton jButtonMenuReturnfromPlay;
+    private javax.swing.JButton jButtonMenuReturnfromUser;
     private javax.swing.JButton jButtonPlay;
     private javax.swing.JButton jButtonUser;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanelMainMenu;
+    private javax.swing.JPanel jPanelPlay;
+    private javax.swing.JPanel jPanelUser;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPanel superPanel;
     // End of variables declaration//GEN-END:variables
-
+    
 }
