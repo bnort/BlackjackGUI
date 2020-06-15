@@ -45,6 +45,9 @@ public class BlackjackControl implements ActionListener {
         if (ac.equalsIgnoreCase("stand")){
             jButtonStandActionPerformed(e);
         }
+        if (ac.equalsIgnoreCase("next hand")){
+            jButtonNextHandActionPerformed(e);
+        }
     }
     
     private void jButtonPlayActionPerformed(ActionEvent e) {
@@ -60,6 +63,7 @@ public class BlackjackControl implements ActionListener {
     private void jButtonMainMenuReturnActionPerformed(ActionEvent e) {
         model.updateMenus(3);
         model.clearBoard();
+        model.closeResultFrame();
     }
     
     private void jButtonExitActionPerformed(ActionEvent e) {
@@ -72,6 +76,12 @@ public class BlackjackControl implements ActionListener {
     
     private void jButtonStandActionPerformed(ActionEvent e) {
         model.playerStand();
+    }
+    
+    private void jButtonNextHandActionPerformed(ActionEvent e) {
+        model.clearBoard();
+        model.initialHandSetup();
+        model.closeResultFrame();
     }
     
     public void addModel(BlackjackModel m) {

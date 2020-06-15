@@ -16,27 +16,29 @@ import javax.swing.*;
  */
 public class BlackjackModel extends Observable {
     
-    Deck tester = new Deck();
+    Deck currentDeck = new Deck();
     LinkedList<Card> cards = new LinkedList<Card>();
     Card nextCard = null;
     private Hand playerHand;
     private Hand dealerHand;
-    private int betSize;
+    private int betSize = 25;
+    public User user = new User("steve");
     
     public void startPlaying()
     {
-        tester.initialiseDeck();
-        tester.shuffleDeck();
+        currentDeck.initialiseDeck();
+        currentDeck.shuffleDeck();
+        updateCredits();
     }
     
     public void initialHandSetup()
     {
-        tester.shuffleCheck();
-        playerHand = new Hand();
-        dealerHand = new Hand();
+        currentDeck.shuffleCheck();
+        playerHand = new Hand(false);
+        dealerHand = new Hand(true);
         for(int i = 0; i < 3; i++)
         {
-            nextCard = tester.drawCard();
+            nextCard = currentDeck.drawCard();
             JLabel cardLabel = new JLabel();
             cardLabel.setIcon(scaleImage(nextCard.getPic()));
             if ((i % 2) == 0)
@@ -53,12 +55,17 @@ public class BlackjackModel extends Observable {
             }
         }
         
+        setChanged();
+        notifyObservers(playerHand);
+        setChanged();
+        notifyObservers(dealerHand);
+        
         blackjackCheck(playerHand);
     }
     
     public void dealCard()
     {
-        nextCard = tester.drawCard();
+        nextCard = currentDeck.drawCard();
         JLabel cardLabel = new JLabel();
         cardLabel.setIcon(scaleImage(nextCard.getPic()));
         getPlayerHand().getHand().add(nextCard);
@@ -66,10 +73,15 @@ public class BlackjackModel extends Observable {
         setChanged();
         notifyObservers(cardLabel);
         
+        setChanged();
+        notifyObservers(playerHand);
+        
         bustCheck(playerHand);
+        
         if(playerHand.isBustFlag())
         {
-            //user.adjustCredits(betSize);
+            user.adjustCredits(betSize);
+            openResultFrame();
         }
     }
     
@@ -84,33 +96,49 @@ public class BlackjackModel extends Observable {
     {
         while(dealerHand.calculateTotal() < 17)
         {
-            nextCard = tester.drawCard();
+            nextCard = currentDeck.drawCard();
             JLabel cardLabel = new JLabel();
             cardLabel.setIcon(scaleImage(nextCard.getPic()));
             dealerHand.getHand().add(nextCard);
             
             setChanged();
             notifyObservers(cardLabel.getIcon());
-            
-            System.out.println("The dealer drew a(n) ");
-            try {
-                Thread.sleep(750);
-            } catch (InterruptedException ex) {
-                System.err.println(ex);
-            }
-            System.out.println(dealerHand.getHand().getLast().getRank());
-            //gameStanding();
         }
         
         bustCheck(dealerHand);
         
-        /*if(!dealerHand.isBustFlag())
+        setChanged();
+        notifyObservers(dealerHand);
+        
+        if(!dealerHand.isBustFlag())
             compareTotal();
         else
         {
             System.out.println("Dealer has busted, you win!");
-            //user.adjustCredits(betSize);
-        }*/
+            user.adjustCredits(betSize);
+            openResultFrame();
+        }
+    }
+    
+    public void compareTotal()
+    {
+        int result = playerHand.calculateTotal() - dealerHand.calculateTotal();
+        if(result > 0)
+        {
+            System.out.println("Congratulations, you win!");
+            user.adjustCredits(betSize);
+        }
+        else if(result < 0)
+        {
+            System.out.println("Oh no, the dealer has a higher score, you lost!");
+            user.adjustCredits(-betSize);
+        }
+        else
+        {
+            System.out.println("You tied with the dealer.");
+        }
+        
+        openResultFrame();
     }
     
     public boolean blackjackCheck(Hand handToCheck)
@@ -118,14 +146,17 @@ public class BlackjackModel extends Observable {
         if(handToCheck.calculateTotal() == 21)
         {
             System.out.println("Wow you got a blackjack! Nice job!");
-            //user.adjustCredits(betSize + (betSize/2));
+            
+            openResultFrame();
+            
+            user.adjustCredits(betSize + (betSize/2));
             return true;
         }
         else
             return false;
     }
     
-        public void bustCheck(Hand handToCheck)
+    public void bustCheck(Hand handToCheck)
     {
         if(handToCheck.calculateTotal() > 21)
             handToCheck.setBustFlag(true);
@@ -149,10 +180,30 @@ public class BlackjackModel extends Observable {
         notifyObservers(obj);
     }
     
+    public void updateCredits()
+    {
+        String credits = "You have " + user.getCredits() + " credits.";
+        setChanged();
+        notifyObservers(credits);
+    }
+    
     public void clearBoard()
     {
         setChanged();
         notifyObservers(1);
+    }
+    
+    public void openResultFrame()
+    {
+        updateCredits();
+        setChanged();
+        notifyObservers(50);
+    }
+    
+    public void closeResultFrame()
+    {
+        setChanged();
+        notifyObservers(99);
     }
     
     public static ImageIcon scaleImage(ImageIcon i) {

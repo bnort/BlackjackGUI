@@ -23,23 +23,46 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
     
     private void initComponents() {
 
+        jFrameWinLose = new javax.swing.JFrame();
         superPanel = new javax.swing.JPanel();
         jPanelMainMenu = new javax.swing.JPanel();
-        jButtonPlay = new javax.swing.JButton();
-        jButtonUser = new javax.swing.JButton();
-        jButtonExit = new javax.swing.JButton();
         jPanelUser = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButtonMainMenuReturnUser = new javax.swing.JButton();
-        jButtonMainMenuReturnPlay = new javax.swing.JButton();
         jPanelPlay = new javax.swing.JPanel();
-        jButtonHit = new javax.swing.JButton();
-        jButtonStand = new javax.swing.JButton();
         jPanelPlayMenu = new javax.swing.JPanel();
         jPanelPlayer = new javax.swing.JPanel();
         jPanelDealer = new javax.swing.JPanel();
+        jPanelGameText = new javax.swing.JPanel();
+        jButtonPlay = new javax.swing.JButton();
+        jButtonUser = new javax.swing.JButton();
+        jButtonExit = new javax.swing.JButton();
+        jButtonMainMenuReturnUser = new javax.swing.JButton();
+        jButtonMainMenuReturnPlay = new javax.swing.JButton();
+        jButtonHit = new javax.swing.JButton();
+        jButtonStand = new javax.swing.JButton();
+        jButtonNextHand = new javax.swing.JButton();
+        jButtonChangeBet = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabelPlayer = new javax.swing.JLabel();
+        jLabelDealer = new javax.swing.JLabel();
+        jLabelResult = new javax.swing.JLabel();
+        jLabelCredits = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
 
+        jFrameWinLose.setSize(new java.awt.Dimension(400, 300));
+        jFrameWinLose.getContentPane().setLayout(new java.awt.FlowLayout());
+
+        jLabelResult.setText("");
+        jFrameWinLose.getContentPane().add(jLabelResult);
+
+        jButtonNextHand.setText("Next Hand");
+        jFrameWinLose.getContentPane().add(jButtonNextHand);
+
+        jButtonChangeBet.setText("jButton4");
+        jFrameWinLose.getContentPane().add(jButtonChangeBet);
+
+        jButtonMainMenuReturnPlay.setText("Main Menu");
+        jFrameWinLose.getContentPane().add(jButtonMainMenuReturnPlay);
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(208, 208, 208));
 
@@ -120,37 +143,23 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         );
 
         superPanel.add(jPanelUser, "userCard");
+        
+        jLabelPlayer.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelPlayer.setText("You have: ");
+        jPanelGameText.add(jLabelPlayer);
 
+        jLabelDealer.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelDealer.setText("Dealer has:");
+        jPanelGameText.add(jLabelDealer);
         jButtonHit.setText("Hit");
+        jPanelPlayMenu.add(jButtonHit);
 
         jButtonStand.setText("Stand");
+        jPanelPlayMenu.add(jButtonStand);
+                
+        jLabelCredits.setText("");
+        jPanelPlayMenu.add(jLabelCredits);
         
-        jButtonMainMenuReturnPlay.setText("Main Menu");
-        jButtonMainMenuReturnPlay.setToolTipText("");
-
-        org.jdesktop.layout.GroupLayout jPanelPlayMenuLayout = new org.jdesktop.layout.GroupLayout(jPanelPlayMenu);
-        jPanelPlayMenu.setLayout(jPanelPlayMenuLayout);
-        jPanelPlayMenuLayout.setHorizontalGroup(
-            jPanelPlayMenuLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanelPlayMenuLayout.createSequentialGroup()
-                .add(57, 57, 57)
-                .add(jButtonHit)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 144, Short.MAX_VALUE)
-                .add(jButtonStand)
-                .add(138, 138, 138)
-                .add(jButtonMainMenuReturnPlay))
-        );
-        jPanelPlayMenuLayout.setVerticalGroup(
-            jPanelPlayMenuLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelPlayMenuLayout.createSequentialGroup()
-                .add(0, 69, Short.MAX_VALUE)
-                .add(jPanelPlayMenuLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jButtonHit)
-                    .add(jButtonStand)
-                    .add(jButtonMainMenuReturnPlay))
-                .add(41, 41, 41))
-        );
-
         org.jdesktop.layout.GroupLayout jPanelPlayLayout = new org.jdesktop.layout.GroupLayout(jPanelPlay);
         jPanelPlay.setLayout(jPanelPlayLayout);
         jPanelPlayLayout.setHorizontalGroup(
@@ -160,19 +169,21 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
                 .add(jPanelPlayLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelPlayMenu, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(jPanelPlayer, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 618, Short.MAX_VALUE)
-                    .add(jPanelDealer, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 618, Short.MAX_VALUE))
+                    .add(jPanelDealer, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 618, Short.MAX_VALUE)
+                    .add(jPanelGameText, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelPlayLayout.setVerticalGroup(
             jPanelPlayLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelPlayLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanelDealer, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 300, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jPanelDealer, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 270, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jPanelPlayer, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 300, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18)
-                .add(jPanelPlayMenu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(jPanelPlayer, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 270, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jPanelGameText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 38, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jPanelPlayMenu, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         superPanel.add(jPanelPlay, "playCard");
@@ -194,14 +205,18 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
     @Override
     public void update(Observable obs, Object obj) {
         if(obj instanceof String) {
-            CardLayout card = (CardLayout)superPanel.getLayout();
-            card.show(superPanel, (String)obj);
+            if (((String)obj).contains("Card")) {
+                CardLayout card = (CardLayout)superPanel.getLayout();
+                card.show(superPanel, (String)obj);
+            }
+            else
+                jLabelCredits.setText((String)obj);
         }
         //TODO: MAKE THIS SHIT GOOD
         if(obj instanceof ImageIcon) {
             JLabel cardLabel = new JLabel((ImageIcon)obj);
             jPanelDealer.add(cardLabel);
-            jPanelDealer.updateUI();
+            jPanelDealer.revalidate();
         }
         if(obj instanceof JLabel) {
             JLabel cardLabel = (JLabel)obj;
@@ -209,11 +224,33 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
             jPanelPlayer.updateUI();
         }
         if(obj instanceof Integer) {
-            jPanelPlayer.removeAll();
-            jPanelDealer.removeAll();
+            if ((Integer)obj == 1) {
+                jPanelPlayer.removeAll();
+                jPanelDealer.removeAll();
+                jPanelDealer.updateUI();
+            }
+            else if ((Integer)obj == 50) {
+                jFrameWinLose.setVisible(true);
+                jPanelPlayMenu.setVisible(false);
+            }
+            else if ((Integer)obj == 99) {
+                jFrameWinLose.setVisible(false);
+                jPanelPlayMenu.setVisible(true);
+            }
+            else {
+                jLabelPlayer.setText("You have: " + (Integer)obj);
+            }
+        }
+        if(obj instanceof Hand) {
+            if (((Hand)obj).isDealerFlag())
+            {
+                jLabelDealer.setText("Dealer has: " + ((Hand)obj).calculateTotal());
+            }
+            else
+                jLabelPlayer.setText("You have: " + ((Hand)obj).calculateTotal());
         }
     }
-
+    
     public void addController(BlackjackControl controller) {
         System.out.println("View      : adding controller");
         
@@ -224,8 +261,10 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         jButtonMainMenuReturnPlay.addActionListener(controller);
         jButtonHit.addActionListener(controller);
         jButtonStand.addActionListener(controller);
+        jButtonNextHand.addActionListener(controller);
     }
     
+    private javax.swing.JFrame jFrameWinLose;
     private javax.swing.JButton jButtonHit;
     private javax.swing.JButton jButtonStand;
     private javax.swing.JButton jButtonExit;
@@ -233,12 +272,19 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
     private javax.swing.JButton jButtonMainMenuReturnPlay;
     private javax.swing.JButton jButtonPlay;
     private javax.swing.JButton jButtonUser;
+    private javax.swing.JButton jButtonChangeBet;
+    private javax.swing.JButton jButtonNextHand;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelPlayer;
+    private javax.swing.JLabel jLabelDealer;
+    private javax.swing.JLabel jLabelResult;
+    private javax.swing.JLabel jLabelCredits;
     private javax.swing.JPanel jPanelPlayMenu;
     private javax.swing.JPanel jPanelMainMenu;
     private javax.swing.JPanel jPanelPlay;
     private javax.swing.JPanel jPanelPlayer;
     private javax.swing.JPanel jPanelDealer;
+    private javax.swing.JPanel jPanelGameText;
     private javax.swing.JPanel jPanelUser;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JPanel superPanel;

@@ -18,6 +18,11 @@ public class Hand {
     private LinkedList<Card> hand = new LinkedList<Card>();
     private boolean standFlag = false;
     private boolean bustFlag = false;
+    private boolean dealerFlag;
+    
+    Hand(boolean b) {
+        this.dealerFlag = b;
+    }
     
     /**
      * Calculates the value of the hand by adding together
@@ -75,5 +80,19 @@ public class Hand {
      */
     public void setBustFlag(boolean bustFlag) {
         this.bustFlag = bustFlag;
+    }
+    
+    /**
+     * @return the dealerFlag
+     */
+    public boolean isDealerFlag() {
+        return dealerFlag;
+    }
+
+    /**
+     * @param dealerFlag the dealerFlag to set
+     */
+    public void setDealerFlag(boolean dealerFlag) {
+        this.dealerFlag = dealerFlag;
     }
 }
