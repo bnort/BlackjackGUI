@@ -22,8 +22,9 @@ public class BlackjackModel extends Observable {
     private Hand playerHand;
     private Hand dealerHand;
     private int betSize = 25;
-    public User user = new User("steve");
+    User user = null;
     String resultString;
+    BlackjackDB BJDB;
     
     public void startPlaying()
     {
@@ -164,6 +165,13 @@ public class BlackjackModel extends Observable {
             handToCheck.setBustFlag(true);
     }
     
+    public void chooseUser(String userName)
+    {
+        this.user = new User(userName);
+        BJDB.addUser(userName);
+        user.setCredits(BJDB.getCredits(user.getName()));
+    }
+    
     public void updateMenus(Object obj)
     {
         switch((int)obj)
@@ -247,5 +255,10 @@ public class BlackjackModel extends Observable {
      */
     public Hand getDealerHand() {
         return dealerHand;
+    }
+    
+    public void addDatabase(BlackjackDB BJDB) {
+        System.out.println("Controller: adding DB");
+        this.BJDB = BJDB;
     }
 }

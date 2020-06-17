@@ -27,36 +27,41 @@ public class BlackjackControl implements ActionListener {
         String ac = e.getActionCommand();
         System.out.println("Controller: acting on Model");
         
-        if (ac.equalsIgnoreCase("play")){
-            jButtonPlayActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("choose user")){
-            jButtonUserActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("exit")){
-            jButtonExitActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("main menu")){
-            jButtonMainMenuReturnActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("hit")){
-            jButtonHitActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("stand")){
-            jButtonStandActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("next hand")){
-            jButtonNextHandActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("change bet")){
-            jButtonChangeBetActionPerformed(e);
-        }
         try {
             jTextFieldChangeBetActionPerformed(Integer.parseInt(ac));
         }
         catch (Exception ex) {
-        
         }
+        switch (ac) {
+            case "Play":
+                jButtonPlayActionPerformed(e);
+                break;
+            case "Choose User":
+                jButtonUserActionPerformed(e);
+                break;
+            case "Exit":
+                jButtonExitActionPerformed(e);
+                break;
+            case "Main Menu":
+                jButtonMainMenuReturnActionPerformed(e);
+                break;
+            case "Hit":
+                jButtonHitActionPerformed(e);
+                break;
+            case "Stand":
+                jButtonStandActionPerformed(e);
+                break;
+            case "Next Hand":
+                jButtonNextHandActionPerformed(e);
+                break;
+            case "Change Bet":
+                jButtonChangeBetActionPerformed(e);
+                break;
+            default:
+                jTextFieldChooseUserActionPerformed(ac);
+                break;
+        }
+        
             
     }
     
@@ -101,6 +106,11 @@ public class BlackjackControl implements ActionListener {
     private void jTextFieldChangeBetActionPerformed(Integer i) {
         model.changeBetSize(i);
         model.closeBetFrame();
+    }
+    
+    private void jTextFieldChooseUserActionPerformed(String s) {
+        model.chooseUser(s);
+        model.updateMenus(3);
     }
     
     public void addModel(BlackjackModel m) {

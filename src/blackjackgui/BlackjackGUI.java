@@ -16,6 +16,7 @@ public class BlackjackGUI {
     public BlackjackGUI() {
         BlackjackModel BJModel = new BlackjackModel();
         BlackjackView BJView = new BlackjackView();
+        BlackjackDB BJDB = new BlackjackDB();
         
         BJModel.addObserver(BJView);
         
@@ -24,5 +25,6 @@ public class BlackjackGUI {
         BJController.addView(BJView);
         BJView.addController(BJController);
         BJView.setVisible(true);
+        BJModel.addDatabase(BJDB);
     }
 }

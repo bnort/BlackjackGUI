@@ -51,7 +51,7 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         jLabelResult = new javax.swing.JLabel();
         jLabelCredits = new javax.swing.JLabel();
         jLabelBetSize = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldChooseUser = new javax.swing.JTextField();
         jTextFieldBetChange = new javax.swing.JTextField();
 
         jDialogWinLose.setResizable(false);
@@ -91,6 +91,7 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
 
         jTextFieldBetChange.setText("");
         jTextFieldBetChange.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jTextFieldBetChange.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanelBetChange.add(jTextFieldBetChange);
 
         jDialogBetChange.getContentPane().add(jPanelBetChange);
@@ -155,7 +156,7 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
                 .add(277, 277, 277)
                 .add(jPanelUserLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel3)
-                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 141, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jTextFieldChooseUser, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 141, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(220, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelUserLayout.createSequentialGroup()
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -168,7 +169,7 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
                 .add(208, 208, 208)
                 .add(jLabel3)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jTextFieldChooseUser, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 543, Short.MAX_VALUE)
                 .add(jButtonMainMenuReturnUser)
                 .addContainerGap())
@@ -320,6 +321,7 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         jButtonNextHand.addActionListener(controller);
         jButtonChangeBetOpener.addActionListener(controller);
         jTextFieldBetChange.addActionListener(controller);
+        jTextFieldChooseUser.addActionListener(controller);
     }
     
     private javax.swing.JDialog jDialogWinLose;
@@ -349,6 +351,6 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
     private javax.swing.JPanel jPanelWinLose;
     private javax.swing.JPanel superPanel;
     private javax.swing.JPanel jPanelBetChange;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextFieldChooseUser;
     private javax.swing.JTextField jTextFieldBetChange;
 }
