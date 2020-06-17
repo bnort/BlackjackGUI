@@ -23,6 +23,7 @@ public class BlackjackModel extends Observable {
     private Hand dealerHand;
     private int betSize = 25;
     public User user = new User("steve");
+    String resultString;
     
     public void startPlaying()
     {
@@ -72,7 +73,6 @@ public class BlackjackModel extends Observable {
              
         setChanged();
         notifyObservers(cardLabel);
-        
         setChanged();
         notifyObservers(playerHand);
         
@@ -80,8 +80,9 @@ public class BlackjackModel extends Observable {
         
         if(playerHand.isBustFlag())
         {
-            user.adjustCredits(betSize);
-            openResultFrame();
+            resultString = "Sorry, you busted.";
+            user.adjustCredits(-betSize);
+            openResultFrame(resultString);
         }
     }
     
@@ -114,42 +115,43 @@ public class BlackjackModel extends Observable {
             compareTotal();
         else
         {
-            System.out.println("Dealer has busted, you win!");
+            resultString = "Dealer has busted, you win!";
             user.adjustCredits(betSize);
-            openResultFrame();
+            openResultFrame(resultString);
         }
     }
     
     public void compareTotal()
     {
+        
         int result = playerHand.calculateTotal() - dealerHand.calculateTotal();
         if(result > 0)
         {
-            System.out.println("Congratulations, you win!");
+            resultString = "Congratulations, you win!";
             user.adjustCredits(betSize);
         }
         else if(result < 0)
         {
-            System.out.println("Oh no, the dealer has a higher score, you lost!");
+            resultString = "The dealer has a higher score, you lost!";
             user.adjustCredits(-betSize);
         }
         else
         {
-            System.out.println("You tied with the dealer.");
+            resultString = "You tied with the dealer.";
         }
         
-        openResultFrame();
+        openResultFrame(resultString);
     }
     
     public boolean blackjackCheck(Hand handToCheck)
     {
         if(handToCheck.calculateTotal() == 21)
         {
-            System.out.println("Wow you got a blackjack! Nice job!");
-            
-            openResultFrame();
+            resultString = "Wow you got a blackjack! Nice job!";
+            openResultFrame(resultString);
             
             user.adjustCredits(betSize + (betSize/2));
+            updateCredits();
             return true;
         }
         else
@@ -176,6 +178,7 @@ public class BlackjackModel extends Observable {
                 obj = "mainMenuCard";
                 break;
         }
+        
         setChanged();
         notifyObservers(obj);
     }
@@ -193,9 +196,16 @@ public class BlackjackModel extends Observable {
         notifyObservers(1);
     }
     
-    public void openResultFrame()
+    public void changeBetSize(Integer i)
+    {
+        this.betSize = i;
+    }
+    
+    public void openResultFrame(String result)
     {
         updateCredits();
+        setChanged();
+        notifyObservers(result);
         setChanged();
         notifyObservers(50);
     }
@@ -203,7 +213,7 @@ public class BlackjackModel extends Observable {
     public void closeResultFrame()
     {
         setChanged();
-        notifyObservers(99);
+        notifyObservers(98);
     }
     
     public static ImageIcon scaleImage(ImageIcon i) {
@@ -211,6 +221,18 @@ public class BlackjackModel extends Observable {
         Image newImg = image.getScaledInstance(70, 106, java.awt.Image.SCALE_SMOOTH);
         
         return new ImageIcon(newImg);
+    }
+    
+    public void openBetFrame()
+    {
+        setChanged();
+        notifyObservers(51);
+    }
+    
+    public void closeBetFrame()
+    {
+        setChanged();
+        notifyObservers(99);
     }
 
     /**

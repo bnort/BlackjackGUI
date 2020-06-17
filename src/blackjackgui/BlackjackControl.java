@@ -48,6 +48,16 @@ public class BlackjackControl implements ActionListener {
         if (ac.equalsIgnoreCase("next hand")){
             jButtonNextHandActionPerformed(e);
         }
+        if (ac.equalsIgnoreCase("change bet")){
+            jButtonChangeBetActionPerformed(e);
+        }
+        try {
+            jTextFieldChangeBetActionPerformed(Integer.parseInt(ac));
+        }
+        catch (Exception ex) {
+        
+        }
+            
     }
     
     private void jButtonPlayActionPerformed(ActionEvent e) {
@@ -80,8 +90,17 @@ public class BlackjackControl implements ActionListener {
     
     private void jButtonNextHandActionPerformed(ActionEvent e) {
         model.clearBoard();
-        model.initialHandSetup();
         model.closeResultFrame();
+        model.initialHandSetup();
+    }
+    
+    private void jButtonChangeBetActionPerformed(ActionEvent e) {
+        model.openBetFrame();
+    }
+    
+    private void jTextFieldChangeBetActionPerformed(Integer i) {
+        model.changeBetSize(i);
+        model.closeBetFrame();
     }
     
     public void addModel(BlackjackModel m) {
