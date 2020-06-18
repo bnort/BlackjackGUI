@@ -24,11 +24,7 @@ public class BlackjackDB {
             setupTable(conn);
             
         } catch (SQLException e) {
-<<<<<<< HEAD
                 System.err.println("SQL Exception: " + e.getMessage());
-=======
-            System.err.println("SQL EXCEPTION LOL " + e.getMessage());
->>>>>>> database
         }
     }
     
@@ -47,11 +43,7 @@ public class BlackjackDB {
                 statement.executeUpdate(sqlCreateTable);
             }
         } catch (SQLException e) {
-<<<<<<< HEAD
                 System.err.println("SQL Exception: " + e.getMessage());
-=======
-            System.err.println("SQL EXCEPTION lmao " + e.getMessage());
->>>>>>> database
         }
     }
     
@@ -69,24 +61,15 @@ public class BlackjackDB {
             try {
                 Statement statement = conn.createStatement();
 
-<<<<<<< HEAD
                 String sqlUpdateTable = "insert into users values ('" + user.toLowerCase() + "',500)";
 
                 statement.executeUpdate(sqlUpdateTable);
             } catch (SQLException e) {
                 System.err.println("SQL Exception: " + e.getMessage());
-=======
-                String sqlUpdateTable = "insert into users values ('" + user + "',500)";
-
-                statement.executeUpdate(sqlUpdateTable);
-            } catch (SQLException e) {
-                System.err.println("SQL EXCEPTION rofl " + e.getMessage());
->>>>>>> database
             }
         }
     }
     
-<<<<<<< HEAD
     public void deleteUser(String user) {
         try {
             Statement statement = conn.createStatement();
@@ -99,8 +82,6 @@ public class BlackjackDB {
         }
     }
     
-=======
->>>>>>> database
     private boolean checkForDuplication(String user) {
         ResultSet rs = null;
         boolean dupeFlag = false;
@@ -116,11 +97,7 @@ public class BlackjackDB {
                     dupeFlag = true;
             }
         } catch (SQLException e) {
-<<<<<<< HEAD
                 System.err.println("SQL Exception: " + e.getMessage());
-=======
-            System.err.println("SQL EXCEPTION onono " + e.getMessage());
->>>>>>> database
         }
         
         return dupeFlag;
@@ -134,27 +111,18 @@ public class BlackjackDB {
         try {
             Statement statement = conn.createStatement();
             
-<<<<<<< HEAD
             rs = statement.executeQuery("select * from users where name = '" + user.toLowerCase() + "'");
-=======
-            rs = statement.executeQuery("select * from users where name = '" + user + "'");
->>>>>>> database
             
             while (rs.next())
                 credits = rs.getInt(2);
             
         } catch (SQLException e) {
-<<<<<<< HEAD
                 System.err.println("SQL Exception: " + e.getMessage());
-=======
-            System.err.println("SQL Expection o boi " + e.getMessage());
->>>>>>> database
         }
         
         return credits;
     }
     
-<<<<<<< HEAD
     public void setCredits(int credits, String user) {
         try {
             Statement statement = conn.createStatement();
@@ -166,6 +134,4 @@ public class BlackjackDB {
                 System.err.println("SQL Exception: " + e.getMessage());
         }
     }
-=======
->>>>>>> database
 }
