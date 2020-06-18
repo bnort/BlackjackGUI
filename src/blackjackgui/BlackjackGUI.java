@@ -16,7 +16,9 @@ public class BlackjackGUI {
     public BlackjackGUI() {
         BlackjackModel BJModel = new BlackjackModel();
         BlackjackView BJView = new BlackjackView();
+        BlackjackDB BJDB = new BlackjackDB();
         
+        BJModel.addDatabase(BJDB);
         BJModel.addObserver(BJView);
         
         BlackjackControl BJController = new BlackjackControl();

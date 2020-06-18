@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package blackjackgui;
 
 import java.awt.Image;
@@ -22,8 +17,9 @@ public class BlackjackModel extends Observable {
     private Hand playerHand;
     private Hand dealerHand;
     private int betSize = 25;
-    public User user = new User("steve");
+    User user = null;
     String resultString;
+    BlackjackDB BJDB;
     
     public void startPlaying()
     {
@@ -82,7 +78,8 @@ public class BlackjackModel extends Observable {
         {
             resultString = "Sorry, you busted.";
             user.adjustCredits(-betSize);
-            openResultFrame(resultString);
+            openResultDialog(resultString);
+            creditCheck();
         }
     }
     
@@ -90,10 +87,10 @@ public class BlackjackModel extends Observable {
     {
         playerHand.setStandFlag(true);
         
-        dealerShitGO();
+        dealerPlay();
     }
     
-    public void dealerShitGO()
+    public void dealerPlay()
     {
         while(dealerHand.calculateTotal() < 17)
         {
@@ -117,7 +114,7 @@ public class BlackjackModel extends Observable {
         {
             resultString = "Dealer has busted, you win!";
             user.adjustCredits(betSize);
-            openResultFrame(resultString);
+            openResultDialog(resultString);
         }
     }
     
@@ -140,7 +137,7 @@ public class BlackjackModel extends Observable {
             resultString = "You tied with the dealer.";
         }
         
-        openResultFrame(resultString);
+        openResultDialog(resultString);
     }
     
     public boolean blackjackCheck(Hand handToCheck)
@@ -148,7 +145,7 @@ public class BlackjackModel extends Observable {
         if(handToCheck.calculateTotal() == 21)
         {
             resultString = "Wow you got a blackjack! Nice job!";
-            openResultFrame(resultString);
+            openResultDialog(resultString);
             
             user.adjustCredits(betSize + (betSize/2));
             updateCredits();
@@ -164,15 +161,45 @@ public class BlackjackModel extends Observable {
             handToCheck.setBustFlag(true);
     }
     
+    public void creditCheck()
+    {
+        if(user.getCredits() <= 0)
+            openZeroCreditsDialog();
+    }
+    
+    public void chooseUser(String userName)
+    {
+        this.user = new User(userName);
+        BJDB.addUser(userName);
+        user.setCredits(BJDB.getCredits(user.getName()));
+    }
+    
+    public void deleteUser()
+    {
+        BJDB.deleteUser(user.getName());
+    }
+    
+    public void reloadCredits()
+    {
+        BJDB.setCredits(500, user.getName());
+        user.setCredits(500);
+        updateCredits();
+    }
+    
+    public boolean checkUser()
+    {
+        if (this.user == null)
+            return false;
+        else
+            return true;
+    }
+    
     public void updateMenus(Object obj)
     {
         switch((int)obj)
         {
             case 1:
                 obj = "playCard";
-                break;
-            case 2:
-                obj = "userCard";
                 break;
             case 3:
                 obj = "mainMenuCard";
@@ -186,6 +213,7 @@ public class BlackjackModel extends Observable {
     public void updateCredits()
     {
         String credits = "You have " + user.getCredits() + " credits.";
+        BJDB.setCredits(user.getCredits(),user.getName());
         setChanged();
         notifyObservers(credits);
     }
@@ -198,10 +226,15 @@ public class BlackjackModel extends Observable {
     
     public void changeBetSize(Integer i)
     {
-        this.betSize = i;
+        if(user.getCredits() < i) {
+            setChanged();
+            notifyObservers(52);
+        }
+        else
+            this.betSize = i;
     }
     
-    public void openResultFrame(String result)
+    public void openResultDialog(String result)
     {
         updateCredits();
         setChanged();
@@ -210,10 +243,46 @@ public class BlackjackModel extends Observable {
         notifyObservers(50);
     }
     
-    public void closeResultFrame()
+    public void closeResultDialog()
     {
         setChanged();
-        notifyObservers(98);
+        notifyObservers(90);
+    }
+    
+    public void openBetDialog()
+    {
+        setChanged();
+        notifyObservers(51);
+    }
+    
+    public void closeBetDialog()
+    {
+        setChanged();
+        notifyObservers(91);
+    }
+    
+    public void openUserDialog()
+    {
+        setChanged();
+        notifyObservers(53);
+    }
+    
+    public void closeUserDialog()
+    {
+        setChanged();
+        notifyObservers(93);
+    }
+    
+    public void openZeroCreditsDialog()
+    {
+        setChanged();
+        notifyObservers(54);
+    }
+    
+    public void closeZeroCreditsDialog()
+    {
+        setChanged();
+        notifyObservers(94);
     }
     
     public static ImageIcon scaleImage(ImageIcon i) {
@@ -221,18 +290,6 @@ public class BlackjackModel extends Observable {
         Image newImg = image.getScaledInstance(70, 106, java.awt.Image.SCALE_SMOOTH);
         
         return new ImageIcon(newImg);
-    }
-    
-    public void openBetFrame()
-    {
-        setChanged();
-        notifyObservers(51);
-    }
-    
-    public void closeBetFrame()
-    {
-        setChanged();
-        notifyObservers(99);
     }
 
     /**
@@ -247,5 +304,10 @@ public class BlackjackModel extends Observable {
      */
     public Hand getDealerHand() {
         return dealerHand;
+    }
+    
+    public void addDatabase(BlackjackDB BJDB) {
+        System.out.println("Controller: adding DB");
+        this.BJDB = BJDB;
     }
 }

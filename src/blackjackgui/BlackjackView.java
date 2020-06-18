@@ -1,22 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package blackjackgui;
 
 
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author bnort
  */
 public class BlackjackView extends javax.swing.JFrame implements Observer  {
+    
+    public int sliderInt;
     
     public BlackjackView() {
         initComponents();
@@ -26,6 +27,9 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
 
         jDialogWinLose = new javax.swing.JDialog();
         jDialogBetChange = new javax.swing.JDialog();
+        jDialogUser = new javax.swing.JDialog();
+        jDialogLowCredits = new javax.swing.JDialog();
+        jDialogZeroCredits = new javax.swing.JDialog();
         superPanel = new javax.swing.JPanel();
         jPanelMainMenu = new javax.swing.JPanel();
         jPanelUser = new javax.swing.JPanel();
@@ -36,6 +40,10 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         jPanelGameText = new javax.swing.JPanel();
         jPanelWinLose = new javax.swing.JPanel();
         jPanelBetChange = new javax.swing.JPanel();
+        jPanelPadTop = new javax.swing.JPanel();
+        jPanelPadBottom = new javax.swing.JPanel();
+        jPanelLowCredits = new javax.swing.JPanel();
+        jPanelZeroCredits = new javax.swing.JPanel();
         jButtonPlay = new javax.swing.JButton();
         jButtonUser = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
@@ -45,14 +53,21 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         jButtonStand = new javax.swing.JButton();
         jButtonNextHand = new javax.swing.JButton();
         jButtonChangeBetOpener = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        jButtonBetConfirm = new javax.swing.JButton();
+        jButtonLowCredits = new javax.swing.JButton();
+        jButtonZeroCreditsYes = new javax.swing.JButton();
+        jButtonZeroCreditsNo = new javax.swing.JButton();
+        jLabelEnterName = new javax.swing.JLabel();
         jLabelPlayer = new javax.swing.JLabel();
         jLabelDealer = new javax.swing.JLabel();
         jLabelResult = new javax.swing.JLabel();
         jLabelCredits = new javax.swing.JLabel();
         jLabelBetSize = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextFieldBetChange = new javax.swing.JTextField();
+        jLabelBetNumber = new javax.swing.JLabel();
+        jLabelLowCredits = new javax.swing.JLabel();
+        jLabelZeroCredits = new javax.swing.JLabel();
+        jTextFieldChooseUser = new javax.swing.JTextField();
+        jSliderBetChange = new javax.swing.JSlider();
 
         jDialogWinLose.setResizable(false);
         jDialogWinLose.setSize(new java.awt.Dimension(400, 100));
@@ -80,102 +95,130 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         
         jDialogBetChange.setResizable(false);
         jDialogBetChange.getContentPane().setLayout(new java.awt.FlowLayout());
-        jDialogBetChange.setSize(new java.awt.Dimension(400,110));
+        jDialogBetChange.setSize(new java.awt.Dimension(400,130));
         jDialogBetChange.setLocationRelativeTo(this);
-
+        
         jPanelBetChange.setLayout(new javax.swing.BoxLayout(jPanelBetChange, javax.swing.BoxLayout.PAGE_AXIS));
 
         jLabelBetSize.setText("Bet Size:");
         jLabelBetSize.setAlignmentX(Component.CENTER_ALIGNMENT);
         jPanelBetChange.add(jLabelBetSize);
 
-        jTextFieldBetChange.setText("");
-        jTextFieldBetChange.setAlignmentX(Component.CENTER_ALIGNMENT);
-        jPanelBetChange.add(jTextFieldBetChange);
+        jSliderBetChange.setMajorTickSpacing(20);
+        jSliderBetChange.setMinorTickSpacing(1);
+        jSliderBetChange.setMinimum(10);
+        jSliderBetChange.setPaintTicks(true);
+        jSliderBetChange.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jSliderBetChange.addChangeListener((ChangeEvent e) -> {
+            jLabelBetNumber.setText(Integer.toString(((JSlider)e.getSource()).getValue()));
+            sliderInt = ((JSlider)e.getSource()).getValue();
+        });
+        jPanelBetChange.add(jSliderBetChange);
+        
+        jButtonBetConfirm.setText("Confirm");
+        jButtonBetConfirm.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jPanelBetChange.add(jButtonBetConfirm);
+        
+        jLabelBetNumber.setText("");
+        jLabelBetNumber.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jPanelBetChange.add(jLabelBetNumber);
 
         jDialogBetChange.getContentPane().add(jPanelBetChange);
+        
+        jDialogUser.setResizable(false);
+        jDialogUser.getContentPane().setLayout(new java.awt.FlowLayout());
+        jDialogUser.setSize(new java.awt.Dimension(200,80));
+        jDialogUser.setLocationRelativeTo(this);
+        
+        jPanelUser.setLayout(new javax.swing.BoxLayout(jPanelUser, javax.swing.BoxLayout.PAGE_AXIS));
+        
+        jLabelEnterName.setText("Enter your name:");
+        jLabelEnterName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jPanelUser.add(jLabelEnterName);
+        
+        jTextFieldChooseUser.setText("");
+        jTextFieldChooseUser.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jPanelUser.add(jTextFieldChooseUser);
+        
+        jDialogUser.getContentPane().add(jPanelUser);
+        
+        jDialogZeroCredits.setResizable(false);
+        jDialogZeroCredits.getContentPane().setLayout(new java.awt.FlowLayout());
+        jDialogZeroCredits.setSize(new java.awt.Dimension(250,110));
+        jDialogZeroCredits.setLocationRelativeTo(this);
+        
+        jPanelZeroCredits.setLayout(new javax.swing.BoxLayout(jPanelZeroCredits, javax.swing.BoxLayout.PAGE_AXIS));
+        
+        jLabelZeroCredits.setText("You ran out of credits. Keep playing?");
+        jLabelZeroCredits.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jPanelZeroCredits.add(jLabelZeroCredits);
+        
+        jButtonZeroCreditsYes.setText("Yes");
+        jButtonZeroCreditsYes.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jPanelZeroCredits.add(jButtonZeroCreditsYes);
+        
+        jButtonZeroCreditsNo.setText("No");
+        jButtonZeroCreditsNo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jPanelZeroCredits.add(jButtonZeroCreditsNo);
+        
+        jDialogZeroCredits.getContentPane().add(jPanelZeroCredits);
+        
+        jDialogLowCredits.setResizable(false);
+        jDialogLowCredits.getContentPane().setLayout(new java.awt.FlowLayout());
+        jDialogLowCredits.setSize(new java.awt.Dimension(200,80));
+        jDialogLowCredits.setLocationRelativeTo(this);
+        
+        jPanelLowCredits.setLayout(new javax.swing.BoxLayout(jPanelLowCredits, javax.swing.BoxLayout.PAGE_AXIS));
+        
+        jLabelLowCredits.setText("Not enough credits.");
+        jLabelLowCredits.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jPanelLowCredits.add(jLabelLowCredits);
+        
+        jButtonLowCredits.setText("Back");
+        jButtonLowCredits.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jButtonLowCredits.addActionListener((ActionEvent e) -> {
+            jDialogLowCredits.setVisible(false);
+            jDialogBetChange.setVisible(true);
+        });
+        jPanelLowCredits.add(jButtonLowCredits);
+        
+        jDialogLowCredits.getContentPane().add(jPanelLowCredits);
         
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(208, 208, 208));
 
         superPanel.setLayout(new java.awt.CardLayout());
 
-        jButtonPlay.setBackground(new java.awt.Color(11, 211, 211));
-        jButtonPlay.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jButtonPlay.setForeground(new java.awt.Color(248, 144, 231));
+        jPanelMainMenu.setLayout(new java.awt.GridLayout(5, 0));
+        jPanelMainMenu.add(jPanelPadTop);
+        
+        jButtonPlay.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
         jButtonPlay.setText("Play");
         jButtonPlay.setDefaultCapable(false);
+        jPanelMainMenu.add(jButtonPlay);
 
-        jButtonUser.setBackground(new java.awt.Color(11, 211, 211));
-        jButtonUser.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jButtonUser.setForeground(new java.awt.Color(248, 144, 231));
+        jButtonUser.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
         jButtonUser.setText("Choose User");
+        jButtonUser.addActionListener((ActionEvent e) -> {
+            jDialogUser.setVisible(true);
+        });
+        jPanelMainMenu.add(jButtonUser);
 
-        jButtonExit.setBackground(new java.awt.Color(11, 211, 211));
-        jButtonExit.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jButtonExit.setForeground(new java.awt.Color(248, 144, 231));
+        jButtonExit.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
         jButtonExit.setText("Exit");
-
-        org.jdesktop.layout.GroupLayout jPanelMainMenuLayout = new org.jdesktop.layout.GroupLayout(jPanelMainMenu);
-        jPanelMainMenu.setLayout(jPanelMainMenuLayout);
-        jPanelMainMenuLayout.setHorizontalGroup(
-            jPanelMainMenuLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanelMainMenuLayout.createSequentialGroup()
-                .add(85, 85, 85)
-                .add(jPanelMainMenuLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jButtonExit, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jButtonUser, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jButtonPlay, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(403, Short.MAX_VALUE))
-        );
-        jPanelMainMenuLayout.setVerticalGroup(
-            jPanelMainMenuLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanelMainMenuLayout.createSequentialGroup()
-                .addContainerGap(456, Short.MAX_VALUE)
-                .add(jButtonPlay, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18)
-                .add(jButtonUser, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18)
-                .add(jButtonExit, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(93, 93, 93))
-        );
+        jButtonExit.addActionListener((ActionEvent e) -> {
+            System.exit(0);
+        });
+        jPanelMainMenu.add(jButtonExit);
+        jPanelMainMenu.add(jPanelPadBottom);
 
         superPanel.add(jPanelMainMenu, "mainMenuCard");
 
-        jLabel3.setText("Please enter your name:");
+        jLabelEnterName.setText("Please enter your name:");
 
         jButtonMainMenuReturnUser.setText("Main Menu");
         jButtonMainMenuReturnUser.setToolTipText("");
 
-        org.jdesktop.layout.GroupLayout jPanelUserLayout = new org.jdesktop.layout.GroupLayout(jPanelUser);
-        jPanelUser.setLayout(jPanelUserLayout);
-        jPanelUserLayout.setHorizontalGroup(
-            jPanelUserLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanelUserLayout.createSequentialGroup()
-                .add(277, 277, 277)
-                .add(jPanelUserLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel3)
-                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 141, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(220, Short.MAX_VALUE))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelUserLayout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jButtonMainMenuReturnUser)
-                .addContainerGap())
-        );
-        jPanelUserLayout.setVerticalGroup(
-            jPanelUserLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanelUserLayout.createSequentialGroup()
-                .add(208, 208, 208)
-                .add(jLabel3)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 543, Short.MAX_VALUE)
-                .add(jButtonMainMenuReturnUser)
-                .addContainerGap())
-        );
-
-        superPanel.add(jPanelUser, "userCard");
-        
         jLabelPlayer.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelPlayer.setText("You have: ");
         jPanelGameText.add(jLabelPlayer);
@@ -248,7 +291,6 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
             else
                 jLabelResult.setText((String)obj);
         }
-        //TODO: MAKE THIS SHIT GOOD
         if(obj instanceof ImageIcon) {
             JLabel cardLabel = new JLabel((ImageIcon)obj);
             jPanelDealer.add(cardLabel);
@@ -262,38 +304,67 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         if(obj instanceof Integer) {
             switch((Integer)obj) {
                 case 1: {
-                jPanelPlayer.removeAll();
-                jPanelDealer.removeAll();
-                jPanelDealer.updateUI();
-                break;
+                    jPanelPlayer.removeAll();
+                    jPanelDealer.removeAll();
+                    jPanelDealer.updateUI();
+                    break;
                 }
                 case 50: {
-                jDialogWinLose.setVisible(true);
-                jButtonHit.setEnabled(false);
-                jButtonStand.setEnabled(false);
-                break;
+                    jDialogWinLose.setVisible(true);
+                    jButtonHit.setEnabled(false);
+                    jButtonStand.setEnabled(false);
+                    jButtonMainMenuReturnPlay.setEnabled(true);
+                    jButtonChangeBetOpener.setEnabled(true);
+                    jButtonNextHand.setEnabled(true);
+                    break;
                 }
                 case 51: {
-                jTextFieldBetChange.setText("");
-                jDialogBetChange.setVisible(true);
-                jButtonHit.setEnabled(false);
-                jButtonStand.setEnabled(false);
-                break;
+                    jDialogBetChange.setVisible(true);
+                    jButtonHit.setEnabled(false);
+                    jButtonStand.setEnabled(false);
+                    break;
                 }
-                case 98: {
-                jDialogWinLose.setVisible(false);
-                jButtonHit.setEnabled(true);
-                jButtonStand.setEnabled(true);
-                break;
+                case 52: {
+                    jDialogLowCredits.setVisible(true);
+                    break;
                 }
-                case 99: {
-                jDialogBetChange.setVisible(false);
-                jButtonHit.setEnabled(true);
-                jButtonStand.setEnabled(true);
-                break;
+                case 53: {
+                    jDialogUser.setVisible(true);
+                    break;
+                }
+                case 54: {
+                    jDialogZeroCredits.setVisible(true);
+                    jButtonHit.setEnabled(false);
+                    jButtonStand.setEnabled(false);
+                    jButtonMainMenuReturnPlay.setEnabled(false);
+                    jButtonChangeBetOpener.setEnabled(false);
+                    jButtonNextHand.setEnabled(false);
+                    break;
+                }
+                case 90: {
+                    jDialogWinLose.setVisible(false);
+                    jButtonHit.setEnabled(true);
+                    jButtonStand.setEnabled(true);
+                    break;
+                }
+                case 91: {
+                    jDialogBetChange.setVisible(false);
+                    jButtonHit.setEnabled(true);
+                    jButtonStand.setEnabled(true);
+                    break;
+                }
+                case 93: {
+                    jDialogUser.setVisible(false);
+                    break;
+                }
+                case 94: {
+                    jDialogZeroCredits.setVisible(false);
+                    jButtonHit.setEnabled(true);
+                    jButtonStand.setEnabled(true);
+                    break;
                 }
                 default: {
-                jLabelPlayer.setText("You have: " + (Integer)obj);
+                    jLabelPlayer.setText("You have: " + (Integer)obj);
                 }
             }
         }
@@ -311,19 +382,23 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         System.out.println("View      : adding controller");
         
         jButtonPlay.addActionListener(controller);
-        jButtonUser.addActionListener(controller);
-        jButtonExit.addActionListener(controller);
         jButtonMainMenuReturnUser.addActionListener(controller);
         jButtonMainMenuReturnPlay.addActionListener(controller);
         jButtonHit.addActionListener(controller);
         jButtonStand.addActionListener(controller);
         jButtonNextHand.addActionListener(controller);
         jButtonChangeBetOpener.addActionListener(controller);
-        jTextFieldBetChange.addActionListener(controller);
+        jButtonBetConfirm.addActionListener(controller);
+        jButtonZeroCreditsYes.addActionListener(controller);
+        jButtonZeroCreditsNo.addActionListener(controller);
+        jTextFieldChooseUser.addActionListener(controller);
     }
     
     private javax.swing.JDialog jDialogWinLose;
     private javax.swing.JDialog jDialogBetChange;
+    private javax.swing.JDialog jDialogUser;
+    private javax.swing.JDialog jDialogLowCredits;
+    private javax.swing.JDialog jDialogZeroCredits;
     private javax.swing.JButton jButtonHit;
     private javax.swing.JButton jButtonStand;
     private javax.swing.JButton jButtonExit;
@@ -333,12 +408,19 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
     private javax.swing.JButton jButtonUser;
     private javax.swing.JButton jButtonChangeBetOpener;
     private javax.swing.JButton jButtonNextHand;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton jButtonBetConfirm;
+    private javax.swing.JButton jButtonLowCredits;
+    private javax.swing.JButton jButtonZeroCreditsYes;
+    private javax.swing.JButton jButtonZeroCreditsNo;
+    private javax.swing.JLabel jLabelEnterName;
     private javax.swing.JLabel jLabelPlayer;
     private javax.swing.JLabel jLabelDealer;
     private javax.swing.JLabel jLabelResult;
     private javax.swing.JLabel jLabelCredits;
     private javax.swing.JLabel jLabelBetSize;
+    private javax.swing.JLabel jLabelBetNumber;
+    private javax.swing.JLabel jLabelLowCredits;
+    private javax.swing.JLabel jLabelZeroCredits;
     private javax.swing.JPanel jPanelPlayMenu;
     private javax.swing.JPanel jPanelMainMenu;
     private javax.swing.JPanel jPanelPlay;
@@ -349,6 +431,10 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
     private javax.swing.JPanel jPanelWinLose;
     private javax.swing.JPanel superPanel;
     private javax.swing.JPanel jPanelBetChange;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextFieldBetChange;
+    private javax.swing.JPanel jPanelPadTop;
+    private javax.swing.JPanel jPanelPadBottom;
+    private javax.swing.JPanel jPanelLowCredits;
+    private javax.swing.JPanel jPanelZeroCredits;
+    private javax.swing.JTextField jTextFieldChooseUser;
+    private javax.swing.JSlider jSliderBetChange;
 }

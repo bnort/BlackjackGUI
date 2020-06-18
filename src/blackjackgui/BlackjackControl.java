@@ -7,7 +7,6 @@ package blackjackgui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JLabel;
 
 /**
  *
@@ -26,58 +25,53 @@ public class BlackjackControl implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String ac = e.getActionCommand();
         System.out.println("Controller: acting on Model");
-        
-        if (ac.equalsIgnoreCase("play")){
-            jButtonPlayActionPerformed(e);
+
+        switch (ac) {
+            case "Play":
+                jButtonPlayActionPerformed(e);
+                break;
+            case "Main Menu":
+                jButtonMainMenuReturnActionPerformed(e);
+                break;
+            case "Hit":
+                jButtonHitActionPerformed(e);
+                break;
+            case "Stand":
+                jButtonStandActionPerformed(e);
+                break;
+            case "Next Hand":
+                jButtonNextHandActionPerformed(e);
+                break;
+            case "Change Bet":
+                jButtonChangeBetActionPerformed(e);
+                break;
+            case "Confirm":
+                jButtonBetConfirmActionPerformed(e);
+                break;
+            case "Yes":
+                jButtonZeroCreditsYesActionPerformed(e);
+                break;
+            case "No":
+                jButtonZeroCreditsNoActionPerformed(e);
+                break;
+            default:
+                jTextFieldChooseUserActionPerformed(ac);
         }
-        if (ac.equalsIgnoreCase("choose user")){
-            jButtonUserActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("exit")){
-            jButtonExitActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("main menu")){
-            jButtonMainMenuReturnActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("hit")){
-            jButtonHitActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("stand")){
-            jButtonStandActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("next hand")){
-            jButtonNextHandActionPerformed(e);
-        }
-        if (ac.equalsIgnoreCase("change bet")){
-            jButtonChangeBetActionPerformed(e);
-        }
-        try {
-            jTextFieldChangeBetActionPerformed(Integer.parseInt(ac));
-        }
-        catch (Exception ex) {
-        
-        }
-            
     }
     
     private void jButtonPlayActionPerformed(ActionEvent e) {
-        model.updateMenus(1);
-        model.startPlaying();
-        model.initialHandSetup();
+        if(model.checkUser()) {
+            model.updateMenus(1);
+            model.startPlaying();
+            model.initialHandSetup();
+        }
+        else
+            model.openUserDialog();
     }
-    
-    private void jButtonUserActionPerformed(ActionEvent e) {
-        model.updateMenus(2);
-    }
-    
     private void jButtonMainMenuReturnActionPerformed(ActionEvent e) {
         model.updateMenus(3);
         model.clearBoard();
-        model.closeResultFrame();
-    }
-    
-    private void jButtonExitActionPerformed(ActionEvent e) {
-        System.exit(0);
+        model.closeResultDialog();
     }
     
     private void jButtonHitActionPerformed(ActionEvent e) {
@@ -90,17 +84,35 @@ public class BlackjackControl implements ActionListener {
     
     private void jButtonNextHandActionPerformed(ActionEvent e) {
         model.clearBoard();
-        model.closeResultFrame();
+        model.closeResultDialog();
         model.initialHandSetup();
     }
     
     private void jButtonChangeBetActionPerformed(ActionEvent e) {
-        model.openBetFrame();
+        model.openBetDialog();
     }
     
-    private void jTextFieldChangeBetActionPerformed(Integer i) {
-        model.changeBetSize(i);
-        model.closeBetFrame();
+    private void jTextFieldChooseUserActionPerformed(String s) {
+        model.chooseUser(s);
+        model.closeUserDialog();
+    }
+    
+    private void jButtonZeroCreditsYesActionPerformed(ActionEvent e) {
+        model.reloadCredits();
+        model.closeZeroCreditsDialog();
+        model.clearBoard();
+        model.closeResultDialog();
+        model.initialHandSetup();
+    }
+    
+    private void jButtonZeroCreditsNoActionPerformed(ActionEvent e) {
+        model.deleteUser();
+        System.exit(0);
+    }
+    
+    private void jButtonBetConfirmActionPerformed(ActionEvent e) {
+        model.changeBetSize(view.sliderInt);
+        model.closeBetDialog();
     }
     
     public void addModel(BlackjackModel m) {
