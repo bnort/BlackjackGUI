@@ -26,5 +26,6 @@ public class BlackjackGUI {
         BJController.addView(BJView);
         BJView.addController(BJController);
         BJView.setVisible(true);
+        BJModel.addDatabase(BJDB);
     }
 }
