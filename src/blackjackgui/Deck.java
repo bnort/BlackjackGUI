@@ -48,7 +48,7 @@ public class Deck {
         LinkedList<Card> tempDeck = new LinkedList<Card>();
         int randNum;
         
-        System.out.println("The deck is now being shuffled.");
+        //System.out.println("The deck is now being shuffled.");
         
         while (!this.cards.isEmpty())
         {

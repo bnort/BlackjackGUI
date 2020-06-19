@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package blackjackgui;
 
 import java.sql.*;
 
 /**
- *
- * @author bnort
+ * Set up and manipulation of JDBC database
+ * 
+ * @author BretNorton 0948797
  */
 public class BlackjackDB {
     
@@ -17,19 +13,21 @@ public class BlackjackDB {
     
     public BlackjackDB(){
         try {
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/BlackjackUsers");
+            conn = DriverManager.getConnection("jdbc:derby:BlackjackUsers;  create=true");
             
-            createTable(conn);
+            createTable();
             
-            setupTable(conn);
+            setupTable();
             
         } catch (SQLException e) {
                 System.err.println("SQL Exception: " + e.getMessage());
         }
     }
     
-        
-    public void createTable(Connection conn) {
+    /**
+     * Check to see if 'users' table exists and if not create the table.
+     */    
+    public void createTable() {
         try {
             DatabaseMetaData md = conn.getMetaData();
             ResultSet rs = md.getTables(null, null, "USERS", null);
@@ -47,7 +45,10 @@ public class BlackjackDB {
         }
     }
     
-    public void setupTable(Connection conn) {
+    /**
+     * Insert some sample data into the table.
+     */
+    public void setupTable() {
         String[] users = {"steve", "jim", "fred"};
             
         for (int i = 0; i > users.length; i++) {
@@ -55,6 +56,11 @@ public class BlackjackDB {
         }
     }
     
+    /**
+     * Add a new row (or user) to the table.
+     * 
+     * @param user 
+     */
     public void addUser(String user) {
         if (!checkForDuplication(user))
         {
@@ -70,6 +76,11 @@ public class BlackjackDB {
         }
     }
     
+    /**
+     * Remove a row (or user) from the table.
+     * 
+     * @param user 
+     */
     public void deleteUser(String user) {
         try {
             Statement statement = conn.createStatement();
@@ -82,6 +93,12 @@ public class BlackjackDB {
         }
     }
     
+    /**
+     * Check to see if a user already exists in the database.
+     * 
+     * @param user the users name as a string to check.
+     * @return true if user already exists.
+     */
     private boolean checkForDuplication(String user) {
         ResultSet rs = null;
         boolean dupeFlag = false;
@@ -103,6 +120,12 @@ public class BlackjackDB {
         return dupeFlag;
     }
     
+    /**
+     * Returns users credits.
+     * 
+     * @param user the user's name as a string to check.
+     * @return user's current credits as an integer.
+     */
     public int getCredits(String user) {
         ResultSet rs = null;
         boolean dupeFlag = false;
@@ -123,6 +146,12 @@ public class BlackjackDB {
         return credits;
     }
     
+    /**
+     * Sets users credits.
+     * 
+     * @param credits updated credits value as an integer.
+     * @param user the user to update as a String.
+     */
     public void setCredits(int credits, String user) {
         try {
             Statement statement = conn.createStatement();

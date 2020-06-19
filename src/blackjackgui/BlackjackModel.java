@@ -6,8 +6,9 @@ import java.util.Observable;
 import javax.swing.*;
 
 /**
- *
- * @author bnort
+ * Model class for this project.
+ * 
+ * @author BretNorton 0948797
  */
 public class BlackjackModel extends Observable {
     
@@ -21,6 +22,9 @@ public class BlackjackModel extends Observable {
     String resultString;
     BlackjackDB BJDB;
     
+    /**
+     * Set up deck for game.
+     */
     public void startPlaying()
     {
         currentDeck.initialiseDeck();
@@ -28,6 +32,10 @@ public class BlackjackModel extends Observable {
         updateCredits();
     }
     
+    /**
+     * Set up starting hands for player and dealer.
+     * Check for player Blackjack.
+     */
     public void initialHandSetup()
     {
         currentDeck.shuffleCheck();
@@ -58,8 +66,12 @@ public class BlackjackModel extends Observable {
         notifyObservers(dealerHand);
         
         blackjackCheck(playerHand);
+        updateCredits();
     }
     
+    /**
+     * Player draw logic. Checks for player busting after drawing a card.
+     */
     public void dealCard()
     {
         nextCard = currentDeck.drawCard();
@@ -83,6 +95,9 @@ public class BlackjackModel extends Observable {
         }
     }
     
+    /**
+     * Player stands and starts dealer logic.
+     */
     public void playerStand()
     {
         playerHand.setStandFlag(true);
@@ -90,6 +105,10 @@ public class BlackjackModel extends Observable {
         dealerPlay();
     }
     
+    /**
+     * Dealer logic, finishes hand after player has finished
+     * making decisions.
+     */
     public void dealerPlay()
     {
         while(dealerHand.calculateTotal() < 17)
@@ -118,6 +137,10 @@ public class BlackjackModel extends Observable {
         }
     }
     
+    /**
+     * Compares hand results if no-one busts and advises
+     * view of winner.
+     */
     public void compareTotal()
     {
         
@@ -140,6 +163,11 @@ public class BlackjackModel extends Observable {
         openResultDialog(resultString);
     }
     
+    /**
+     * Checks hand for blackjack.
+     * 
+     * @return true if hand has Blackjack, false otherwise.
+     */
     public boolean blackjackCheck(Hand handToCheck)
     {
         if(handToCheck.calculateTotal() == 21)
@@ -148,25 +176,34 @@ public class BlackjackModel extends Observable {
             openResultDialog(resultString);
             
             user.adjustCredits(betSize + (betSize/2));
-            updateCredits();
             return true;
         }
         else
             return false;
     }
     
+    /**
+     * Check if hand has busted (exceeded 21).
+     */
     public void bustCheck(Hand handToCheck)
     {
         if(handToCheck.calculateTotal() > 21)
             handToCheck.setBustFlag(true);
     }
     
+    /**
+     * Checks to see if user has at least one credit at completion of hand.
+     */
     public void creditCheck()
     {
         if(user.getCredits() <= 0)
             openZeroCreditsDialog();
     }
     
+    /**
+     * Populates user class. Will add user to database if not already
+     * there and then gets their credit amount from the database.
+     */
     public void chooseUser(String userName)
     {
         this.user = new User(userName);
@@ -174,11 +211,17 @@ public class BlackjackModel extends Observable {
         user.setCredits(BJDB.getCredits(user.getName()));
     }
     
+    /**
+     * Remove user from database.
+     */
     public void deleteUser()
     {
         BJDB.deleteUser(user.getName());
     }
     
+    /**
+     * Add 500 credits to user account.
+     */
     public void reloadCredits()
     {
         BJDB.setCredits(500, user.getName());
@@ -186,6 +229,11 @@ public class BlackjackModel extends Observable {
         updateCredits();
     }
     
+    /**
+     * Check if user exists in database.
+     * 
+     * @return true if user exists, false otherwise.
+     */
     public boolean checkUser()
     {
         if (this.user == null)
@@ -194,6 +242,9 @@ public class BlackjackModel extends Observable {
             return true;
     }
     
+    /**
+     * Move between menus.
+     */
     public void updateMenus(Object obj)
     {
         switch((int)obj)
@@ -210,6 +261,9 @@ public class BlackjackModel extends Observable {
         notifyObservers(obj);
     }
     
+    /**
+     * Update credits on view.
+     */
     public void updateCredits()
     {
         String credits = "You have " + user.getCredits() + " credits.";
@@ -218,12 +272,20 @@ public class BlackjackModel extends Observable {
         notifyObservers(credits);
     }
     
+    /**
+     * Clear blackjack board on view.
+     */
     public void clearBoard()
     {
         setChanged();
         notifyObservers(1);
     }
     
+    /**
+     * Check if user has enough credits to change their bet.
+     * 
+     * @param i the bet size the user wants to place.
+     */
     public void changeBetSize(Integer i)
     {
         if(user.getCredits() < i) {
@@ -234,6 +296,9 @@ public class BlackjackModel extends Observable {
             this.betSize = i;
     }
     
+    /**
+     * Opening and closing dialogs in view.
+     */
     public void openResultDialog(String result)
     {
         updateCredits();
@@ -285,6 +350,12 @@ public class BlackjackModel extends Observable {
         notifyObservers(94);
     }
     
+    /**
+     * Resizes an ImageIcon - used primarily for resizing card images.
+     * 
+     * @param i the image icon needing resizing.
+     * @return the resized image as an ImageIcon.
+     */
     public static ImageIcon scaleImage(ImageIcon i) {
         Image image = i.getImage();
         Image newImg = image.getScaledInstance(70, 106, java.awt.Image.SCALE_SMOOTH);
@@ -307,7 +378,7 @@ public class BlackjackModel extends Observable {
     }
     
     public void addDatabase(BlackjackDB BJDB) {
-        System.out.println("Controller: adding DB");
+        //System.out.println("Controller: adding DB");
         this.BJDB = BJDB;
     }
 }

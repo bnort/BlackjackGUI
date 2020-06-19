@@ -1,8 +1,9 @@
 package blackjackgui;
 
 /**
- *
- * @author bnort
+ * Blackjack with GUI.
+ * 
+ * @author BretNorton 0948797
  */
 public class BlackjackGUI {
 

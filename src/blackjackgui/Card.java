@@ -73,6 +73,9 @@ public class Card {
         return this.rank + " of " + this.suit;
     }
     
+    /**
+     * @return pic representation of the card as a .png
+     */
     public ImageIcon getPic() {
         return pic;
     } 

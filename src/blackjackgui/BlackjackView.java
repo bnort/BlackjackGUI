@@ -1,6 +1,5 @@
 package blackjackgui;
 
-
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -12,8 +11,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- *
- * @author bnort
+ * View class for this project.
+ * 
+ * @author BretNorton 0948797
  */
 public class BlackjackView extends javax.swing.JFrame implements Observer  {
     
@@ -23,6 +23,9 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         initComponents();
     }
     
+    /**
+     * Set up GUI.
+     */
     private void initComponents() {
 
         jDialogWinLose = new javax.swing.JDialog();
@@ -278,6 +281,9 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         setLocationRelativeTo(null);
     }
     
+    /**
+     * Modify GUI with input from model.
+     */
     @Override
     public void update(Observable obs, Object obj) {
         if(obj instanceof String) {
@@ -378,8 +384,11 @@ public class BlackjackView extends javax.swing.JFrame implements Observer  {
         }
     }
     
+    /**
+     * Set up action listeners to interact with controller.
+     */
     public void addController(BlackjackControl controller) {
-        System.out.println("View      : adding controller");
+        //System.out.println("View      : adding controller");
         
         jButtonPlay.addActionListener(controller);
         jButtonMainMenuReturnUser.addActionListener(controller);
